@@ -1,0 +1,4 @@
+= Stackoverflow question:
+
+Setting koin android using viewmodel and Koin dependency injection Where should I look for to get it working? +
+https://stackoverflow.com/questions/74737252/setting-koin-android-using-viewmodel-and-koin-dependency-injection-where-should[question]
