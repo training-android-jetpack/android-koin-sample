@@ -20,7 +20,10 @@ class SampleServiceInMemory : SampleService {
     override fun hello(): String = "hello"
 }
 
-class SampleViewModel(val sampleService: SampleService) : ViewModel() {
+class SampleViewModel(
+    @Suppress("MemberVisibilityCanBePrivate")
+    val sampleService: SampleService
+) : ViewModel() {
     fun sayHello(activity: AppCompatActivity) {
         Toast.makeText(
             activity,
