@@ -1,13 +1,17 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.cheroliv.koin
 
 import android.app.Application
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
+import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -21,14 +25,13 @@ class SampleServiceInMemory : SampleService {
 }
 
 class SampleViewModel(
-    @Suppress("MemberVisibilityCanBePrivate")
     val sampleService: SampleService
 ) : ViewModel() {
     fun sayHello(activity: AppCompatActivity) {
-        Toast.makeText(
+        makeText(
             activity,
             sampleService.hello(),
-            Toast.LENGTH_SHORT
+            LENGTH_SHORT
         ).show()
     }
 }
@@ -39,6 +42,7 @@ class SampleApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@SampleApplication)
+            androidFileProperties()
             modules(sampleModule)
         }
     }
@@ -46,7 +50,7 @@ class SampleApplication : Application() {
 
 val sampleModule = module {
     single<SampleService> { SampleServiceInMemory() }
-    viewModel { SampleViewModel(get()) }
+    viewModelOf(::SampleViewModel)
 }
 
 class MainActivity : AppCompatActivity() {
